@@ -11,5 +11,5 @@ That's it!
 
 ## To-do
 
-[ ] Many-to-many font mappings (instead of just many-to-one)
-[ ] More user-friendly font replacement definitions
+- [ ] Many-to-many font mappings (instead of just many-to-one)
+- [ ] More user-friendly font replacement definitions
