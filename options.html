@@ -4,10 +4,6 @@
     <title>fontreplacer options</title>
     <meta charset="UTF-8" />
     <style>
-      body {
-        width: 500px;
-      }
-
       label {
         display: block;
       }
@@ -18,13 +14,33 @@
       }
 
       textarea {
-        width: 350px;
+        width: 30em;
+        display: block;
+
+        resize: vertical;
+      }
+
+      .mapping-field {
+        width: 30em;
+
+        padding-top: 1.5em;
+        padding-bottom: 1.5em;
+
+        border-bottom: solid 1px lightgrey;
+      }
+
+      .mapping-field:first-of-type {
+        padding-top: 0;
+      }
+
+      .mapping-field:last-of-type {
+        margin-bottom: 1.5em;
       }
     </style>
   </head>
   <body>
     <section>
-      <h2>replacement</h2>
+      <!-- <h2>replacement</h2> -->
       <!-- mapping fields will go here -->
     </section>
     <button id="new-mapping-field">+ New mapping</button>

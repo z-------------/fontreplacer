@@ -7,9 +7,15 @@ var xhr = function(url, callback) {
   oReq.send();
 };
 
+function stringReplaceAtIndex(string, index, replacement) {
+  var array = string.split("");
+  array[index] = replacement;
+  return array.join("");
+}
+
 var mappingFieldTemplate = "<label>\
-  <span>replace these fonts (comma separated; use <code>\"</code>, not <code>'</code>):</span>\
-  <input class=\"from\" type=\"text\" />\
+  <span>replace these fonts (comma separated):</span>\
+  <textarea class=\"from\"></textarea>\
 </label>\
 <label>\
   <span>with this font stack:</span>\
@@ -65,6 +71,13 @@ document.getElementById("save").addEventListener("click", function() {
                       }
                       while (newVal[newVal.length - 1] === " ") {
                         newVal = newVal.substring(0, newVal.length - 1);
+                      }
+
+                      if (newVal[0] === "'") {
+                        newVal = stringReplaceAtIndex(newVal, 0, "\"");
+                      }
+                      if (newVal[newVal.length - 1] === "'") {
+                        newVal = stringReplaceAtIndex(newVal, newVal.length - 1, "\"");
                       }
 
                       return newVal;
