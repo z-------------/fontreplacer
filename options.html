@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>fontreplacer options</title>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        width: 500px;
+      }
+
+      label {
+        display: block;
+      }
+
+      span {
+        display: inline-block;
+        vertical-align: top;
+      }
+      
+      textarea {
+        width: 350px;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h2>replacement</h2>
+      <label>
+        <span>replace these fonts (comma separated; use <code>"</code>, not <code>'</code>):</span>
+        <input id="from" type="text" />
+      </label>
+      <label>
+        <span>with this font stack:</span>
+        <textarea id="to"></textarea>
+      </label>
+    </section>
+    <button id="save">Save</button>
+
+    <script src="options.js"></script>
+  </body>
+</html>
