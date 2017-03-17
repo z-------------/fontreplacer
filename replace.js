@@ -6,7 +6,8 @@ function log(msg, force) {
   // console.log(`[fontreplacer] ${msg}`);
 }
 
-var from, to, defaults;
+var defaults;
+var mappings = [];
 var replacedCount = 0;
 
 log("about to get elements.");
@@ -31,32 +32,33 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
 
   log("got defaults.");
 
-  log("about to get settings.")
+  log("about to get mappings.")
 
-  chrome.storage.sync.get(["from", "to"], function(result) {
-    if (result.from && result.from[0]) {
-      from = result.from;
+  chrome.storage.sync.get([ "mappings" ], function(result) {
+    if (result.mappings && result.mappings[0]) {
+      mappings = result.mappings;
     } else {
-      from = defaults.from;
+      mappings = defaults.mappings;
     }
 
-    if (result.to) {
-      to = result.to;
-    } else {
-      to = defaults.to;
-    }
+    log("got mappings.");
 
-    log("got settings.");
+    log("about to start fontreplacing.");
 
-    for (let i = 0; i < elements.length; i++) {
-      var fontStack = getComputedStyle(elements[i]).fontFamily.toLowerCase().split(", ");
+    for (let i = 0; i < mappings.length; i++) {
+      var from = mappings[i].from;
+      var to = mappings[i].to;
 
-      if (from.indexOf(fontStack[0]) !== -1) { // first font in stack is in `from`
-        elements[i].style.fontFamily = to;
-        replacedCount += 1;
+      for (let j = 0; j < elements.length; j++) {
+        var fontStack = getComputedStyle(elements[j]).fontFamily.toLowerCase().split(", ");
+
+        if (from.indexOf(fontStack[0]) !== -1) { // first font in stack is in `from`
+          elements[j].style.fontFamily = to;
+          replacedCount += 1;
+        }
       }
     }
 
-    log(`done. fontreplaced ${replacedCount} elements.`, true);
+    log(`done. fontreplaced ${replacedCount} times.`, true);
   });
 });

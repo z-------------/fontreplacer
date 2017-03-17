@@ -7,40 +7,76 @@ var xhr = function(url, callback) {
   oReq.send();
 };
 
-chrome.storage.sync.get(["from", "to"], function(result) {
-  console.log(result);
+var mappingFieldTemplate = "<label>\
+  <span>replace these fonts (comma separated; use <code>\"</code>, not <code>'</code>):</span>\
+  <input class=\"from\" type=\"text\" />\
+</label>\
+<label>\
+  <span>with this font stack:</span>\
+  <textarea class=\"to\"></textarea>\
+</label>";
 
-  if (result.from) {
-    document.getElementById("from").value = result.from.join(", ");
-  }
+function addNewMappingField(from, to) {
+  var div = document.createElement("div");
+  div.classList.add("mapping-field");
+  div.dataset.index = document.querySelectorAll(".mapping-field").length;
+  div.innerHTML = mappingFieldTemplate;
 
-  if (result.to) {
-    document.getElementById("to").value = result.to;
-  }
-});
+  div.querySelector(".from").value = (from ? from.join(", ") : "");
+  div.querySelector(".to").value = to || "";
+
+  document.querySelector("section").appendChild(div);
+}
 
 xhr(chrome.runtime.getURL("defaults.json"), function(response) {
   var defaults = JSON.parse(response);
-  document.getElementById("from").setAttribute("placeholder", defaults.from.join(", "));
-  document.getElementById("to").setAttribute("placeholder", defaults.to);
+
+  chrome.storage.sync.get([ "mappings" ], function(result) {
+    var mappings;
+
+    if (result.mappings && result.mappings[0]) {
+      mappings = result.mappings;
+    } else {
+      mappings = defaults.mappings;
+    }
+
+    for (let i = 0; i < mappings.length; i++) {
+      addNewMappingField(mappings[i].from, mappings[i].to);
+    }
+  });
+});
+
+document.getElementById("new-mapping-field").addEventListener("click", function() {
+  addNewMappingField()
 });
 
 document.getElementById("save").addEventListener("click", function() {
-  var fromInput = document.getElementById("from");
-  var toInput = document.getElementById("to");
+  var mappingFields = document.querySelectorAll(".mapping-field");
+  var mappings = [];
 
-  var newFrom = fromInput.value.split(/,\s|,/ig);
-  console.log(newFrom);
-  var newTo = toInput.value;
-  console.log(newTo);
+  for (let i = 0; i < mappingFields.length; i++) {
+    var mapping = {};
+    mapping.from = mappingFields[i].querySelector(".from").value.toLowerCase()
+                    .split(",")
+                    .map(function(value) {
+                      var newVal = value;
+                      while (newVal[0] === " ") {
+                        newVal = newVal.substring(1);
+                      }
+                      while (newVal[newVal.length - 1] === " ") {
+                        newVal = newVal.substring(0, newVal.length - 1);
+                      }
 
-  if (newFrom && newFrom[0].length >= 1) {
-    console.log("will write new from");
-    chrome.storage.sync.set({ from: newFrom });
+                      return newVal;
+                    });
+    mapping.to = mappingFields[i].querySelector(".to").value;
+
+    if (mapping.from.length > 0 && mapping.to.length > 0) {
+      mappings.push(mapping);
+    }
   }
 
-  if (newTo && newTo.length >= 1) {
-    console.log("will write new to");
-    chrome.storage.sync.set({ to: newTo });
-  }
+  chrome.storage.sync.set({ mappings: mappings }, function() {
+    document.getElementById("save").innerHTML = "Saved";
+  });
 });

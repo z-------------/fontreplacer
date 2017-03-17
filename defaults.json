@@ -1,4 +1,6 @@
 {
-  "from": ["arial"],
-  "to": "FreeSans, 'Noto Sans', sans-serif"
+  "mappings": [{
+    "from": ["arial"],
+    "to": "FreeSans, 'Noto Sans', sans-serif"
+    }]
 }
