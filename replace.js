@@ -18,6 +18,7 @@ function xhr(url, callback) {
 var defaults;
 var mappings;
 var filters = [];
+var installedFonts;
 var elements = [];
 var replacedCount = 0;
 
@@ -43,47 +44,69 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
 
     log("got user options.");
 
-    log("about to get and filter elements.");
+    log("about to get installed fonts.");
 
-    function checkChildren(parent) {
-      [].slice.call(parent.children).forEach(function(child, i) {
-        var matchesASelector = false;
-        for (let j = 0; j < filters.length; j++) {
-          if (child.matches(filters[j])) {
-            matchesASelector = true;
-            break;
+    chrome.runtime.sendMessage("fonts please", function(fonts) {
+      installedFonts = fonts;
+
+      log("got installed fonts.");
+
+      log("about to get and filter elements.");
+
+      function checkChildren(parent) {
+        [].slice.call(parent.children).forEach(function(child, i) {
+          var matchesASelector = false;
+          for (let j = 0; j < filters.length; j++) {
+            if (child.matches(filters[j])) {
+              matchesASelector = true;
+              break;
+            }
+          }
+          if (matchesASelector === false) {
+            elements.push(child);
+            checkChildren(child)
+          }
+        });
+      }
+
+      checkChildren(document);
+
+      log("got and filtered elements.");
+
+      log("about to start fontreplacing.");
+
+      for (let i = 0; i < mappings.length; i++) {
+        var from = mappings[i].from;
+        var to = mappings[i].to;
+
+        for (let j = 0; j < elements.length; j++) {
+          var fontStack = getComputedStyle(elements[j]).fontFamily.toLowerCase().split(", ");
+
+          if (
+            from.indexOf(fontStack[0]) !== -1 ||
+            from.indexOf(fontStack.map(function(font) {
+              var fontNoQuotes = font;
+              if (font[0] === "\"" && font[font.length - 1] === "\"" ||
+                  font[0] === "'" && font[font.length - 1] === "'"
+              ) {
+                fontNoQuotes = font.substring(1, font.length - 1);
+              }
+              return fontNoQuotes;
+            }).filter(function(font) {
+              if (installedFonts.indexOf(font) !== -1) {
+                return true;
+              } else {
+                return false;
+              }
+            })[0]) !== -1
+          ) {
+            elements[j].style.fontFamily = to;
+            replacedCount += 1;
           }
         }
-        if (matchesASelector === false) {
-          elements.push(child);
-          checkChildren(child)
-        }
-      });
-    }
-
-    checkChildren(document);
-
-    console.log(elements);
-
-    log("got and filtered elements.");
-
-    log("about to start fontreplacing.");
-
-    for (let i = 0; i < mappings.length; i++) {
-      var from = mappings[i].from;
-      var to = mappings[i].to;
-
-      for (let j = 0; j < elements.length; j++) {
-        var fontStack = getComputedStyle(elements[j]).fontFamily.toLowerCase().split(", ");
-        console.log(elements[j], fontStack);
-
-        if (from.indexOf(fontStack[0]) !== -1) { // first font in stack is in `from`
-          elements[j].style.fontFamily = to;
-          replacedCount += 1;
-        }
       }
-    }
 
-    log(`done. fontreplaced ${replacedCount} times.`, true);
+      log(`done. fontreplaced ${replacedCount} times.`, true);
+    });
   });
 });

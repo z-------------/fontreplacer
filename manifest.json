@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "fontreplacer",
-  "version": "0.0.3",
+  "version": "0.0.4",
 
   "description": "Replace any font with any font stack. Useful for Arial → Helvetica.",
 
@@ -11,7 +11,7 @@
     "page": "options.html"
   },
 
-  "permissions": [ "storage" ],
+  "permissions": [ "storage", "fontSettings" ],
 
   "content_scripts": [{
       "matches": [ "<all_urls>" ],
@@ -19,5 +19,10 @@
     }],
   "web_accessible_resources": [
     "defaults.json"
-  ]
+  ],
+
+  "background": {
+    "scripts": [ "eventPage.js" ],
+    "persistent": false
+  }
 }
