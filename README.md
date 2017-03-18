@@ -15,6 +15,6 @@ That's it!
 
 - [x] Many-to-many font mappings (instead of just many-to-one)
 - [x] More user-friendly font replacement definitions
-- [ ] Configuration export and import
+- [ ] Configuration export and import (should not be necessary thanks to `chrome.storage.sync` but what the heck)
 - [x] Option to exclude elements with specified classes
 - [ ] Target elements based on actually rendered font instead of first font in stack
