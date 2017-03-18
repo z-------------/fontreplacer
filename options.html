@@ -4,6 +4,14 @@
     <title>fontreplacer options</title>
     <meta charset="UTF-8" />
     <style>
+      body {
+        padding-bottom: 5em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: 500;
+      }
+
       label {
         display: block;
       }
@@ -11,6 +19,16 @@
       span {
         display: inline-block;
         vertical-align: top;
+      }
+
+      section {
+        margin-bottom: 3em;
+      }
+
+      ul, ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
       }
 
       textarea {
@@ -36,15 +54,42 @@
       .mapping-field:last-of-type {
         margin-bottom: 1.5em;
       }
+
+      .input-filters {
+        height: 6em;
+      }
+
+      .save--big {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        display: block;
+
+        padding: 0.7em;
+        border-radius: 0;
+
+        font-size: 1.4em;
+      }
     </style>
   </head>
   <body>
-    <section>
-      <!-- <h2>replacement</h2> -->
-      <!-- mapping fields will go here -->
+    <section class="section-replacement">
+      <h2>Replacements</h2>
+      <ul class="list-mapping-fields">
+        <!-- mapping fields will go here -->
+      </ul>
+      <button id="new-mapping-field">+ New mapping</button>
     </section>
-    <button id="new-mapping-field">+ New mapping</button>
-    <button id="save">Save</button>
+    <section class="section-filters">
+      <h2>Filters</h2>
+      <label>
+        <span>Exclude elements that match these selectors (newline-separated):</span>
+        <textarea class="input-filters"></textarea>
+      </label>
+    </section>
+
+    <button class="save save--big">Save</button>
 
     <script src="options.js"></script>
   </body>

@@ -1,3 +1,5 @@
+/* basic functions */
+
 var xhr = function(url, callback) {
   var oReq = new XMLHttpRequest();
   oReq.onload = function(e){
@@ -13,14 +15,18 @@ function stringReplaceAtIndex(string, index, replacement) {
   return array.join("");
 }
 
+/* html template for mapping field */
+
 var mappingFieldTemplate = "<label>\
-  <span>replace these fonts (comma separated):</span>\
+  <span>Replace these fonts (comma separated):</span>\
   <textarea class=\"from\"></textarea>\
 </label>\
 <label>\
-  <span>with this font stack:</span>\
+  <span>With this font stack:</span>\
   <textarea class=\"to\"></textarea>\
 </label>";
+
+/* function for adding new mapping fields */
 
 function addNewMappingField(from, to) {
   var div = document.createElement("div");
@@ -31,14 +37,18 @@ function addNewMappingField(from, to) {
   div.querySelector(".from").value = (from ? from.join(", ") : "");
   div.querySelector(".to").value = to || "";
 
-  document.querySelector("section").appendChild(div);
+  document.querySelector(".list-mapping-fields").appendChild(div);
 }
+
+/* get defaults, get user options, display them */
 
 xhr(chrome.runtime.getURL("defaults.json"), function(response) {
   var defaults = JSON.parse(response);
 
-  chrome.storage.sync.get([ "mappings" ], function(result) {
-    var mappings;
+  chrome.storage.sync.get([ "mappings", "filters" ], function(result) {
+    var mappings, filters;
+
+    /* replacements */
 
     if (result.mappings && result.mappings[0]) {
       mappings = result.mappings;
@@ -49,47 +59,80 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
     for (let i = 0; i < mappings.length; i++) {
       addNewMappingField(mappings[i].from, mappings[i].to);
     }
+
+    /* filters */
+
+    if (result.filters) {
+      filters = result.filters;
+    } else {
+      filters = [];
+    }
+
+    document.querySelector(".input-filters").value = filters.join("\n");
   });
 });
+
+/* handle new-mapping-field clicks */
 
 document.getElementById("new-mapping-field").addEventListener("click", function() {
   addNewMappingField()
 });
 
-document.getElementById("save").addEventListener("click", function() {
-  var mappingFields = document.querySelectorAll(".mapping-field");
-  var mappings = [];
+/* handle saving */
 
-  for (let i = 0; i < mappingFields.length; i++) {
-    var mapping = {};
-    mapping.from = mappingFields[i].querySelector(".from").value.toLowerCase()
-                    .split(",")
-                    .map(function(value) {
-                      var newVal = value;
-                      while (newVal[0] === " ") {
-                        newVal = newVal.substring(1);
-                      }
-                      while (newVal[newVal.length - 1] === " ") {
-                        newVal = newVal.substring(0, newVal.length - 1);
-                      }
+document.querySelectorAll(".save").forEach(function(saveButton, i) {
+  saveButton.addEventListener("click", function(e) {
 
-                      if (newVal[0] === "'") {
-                        newVal = stringReplaceAtIndex(newVal, 0, "\"");
-                      }
-                      if (newVal[newVal.length - 1] === "'") {
-                        newVal = stringReplaceAtIndex(newVal, newVal.length - 1, "\"");
-                      }
+    /* replacements */
 
-                      return newVal;
-                    });
-    mapping.to = mappingFields[i].querySelector(".to").value;
+    var mappingFields = document.querySelectorAll(".mapping-field");
+    var mappings = [];
 
-    if (mapping.from.length > 0 && mapping.to.length > 0) {
-      mappings.push(mapping);
+    for (let i = 0; i < mappingFields.length; i++) {
+      var mapping = {};
+      mapping.from = mappingFields[i].querySelector(".from").value.toLowerCase()
+                      .split(",")
+                      .map(function(value) {
+                        var newVal = value;
+                        while (newVal[0] === " ") {
+                          newVal = newVal.substring(1);
+                        }
+                        while (newVal[newVal.length - 1] === " ") {
+                          newVal = newVal.substring(0, newVal.length - 1);
+                        }
+
+                        if (newVal[0] === "'") {
+                          newVal = stringReplaceAtIndex(newVal, 0, "\"");
+                        }
+                        if (newVal[newVal.length - 1] === "'") {
+                          newVal = stringReplaceAtIndex(newVal, newVal.length - 1, "\"");
+                        }
+
+                        return newVal;
+                      });
+      mapping.to = mappingFields[i].querySelector(".to").value;
+
+      if (mapping.from.length > 0 && mapping.to.length > 0) {
+        mappings.push(mapping);
+      }
     }
-  }
 
-  chrome.storage.sync.set({ mappings: mappings }, function() {
-    document.getElementById("save").innerHTML = "Saved";
+    chrome.storage.sync.set({ mappings: mappings }, function() {
+      console.log("saved replacements");
+    });
+
+    /* filters */
+
+    var filters = document.querySelector(".input-filters").value.split("\n");
+
+    if (filters.length > 0 && filters[0].length > 0) {
+      chrome.storage.sync.set({ filters: filters }, function() {
+        console.log("saved filters");
+      });
+    } else {
+      chrome.storage.sync.remove("filters", function() {
+        console.log("saved filters");
+      });
+    }
   });
 });
