@@ -1,8 +1,6 @@
-function log(msg, force) {
-  // if (force) {
-  //   console.log(`[fontreplacer] ${msg}`);
-  // }
+var startTime = new Date();
 
+function log(msg, force) {
   console.log(`[fontreplacer] ${msg}`);
 }
 
@@ -22,14 +20,12 @@ var installedFonts;
 var elements = [];
 var replacedCount = 0;
 
-log("about to get defaults.");
+log("getting defaults...");
 
 xhr(chrome.runtime.getURL("defaults.json"), function(response) {
   defaults = JSON.parse(response);
 
-  log("got defaults.");
-
-  log("about to get user options.")
+  log("getting user options...")
 
   chrome.storage.sync.get([ "mappings", "filters" ], function(result) {
     if (result.mappings && result.mappings[0]) {
@@ -42,16 +38,12 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
       filters = result.filters;
     }
 
-    log("got user options.");
-
-    log("about to get installed fonts.");
+    log("getting installed fonts...");
 
     chrome.runtime.sendMessage("fonts please", function(fonts) {
       installedFonts = fonts;
 
-      log("got installed fonts.");
-
-      log("about to get and filter elements.");
+      log("getting and filtering elements...");
 
       function checkChildren(parent) {
         [].slice.call(parent.children).forEach(function(child, i) {
@@ -71,9 +63,7 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
 
       checkChildren(document);
 
-      log("got and filtered elements.");
-
-      log("about to start fontreplacing.");
+      log("starting fontreplacement...");
 
       for (let i = 0; i < mappings.length; i++) {
         var from = mappings[i].from;
@@ -106,7 +96,7 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
         }
       }
 
-      log(`done. fontreplaced ${replacedCount} times.`, true);
+      log(`done. fontreplaced ${replacedCount} times. took ${new Date() - startTime}ms in total.`, true);
     });
   });
 });
