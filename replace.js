@@ -65,6 +65,13 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
 
       log("starting fontreplacement...");
 
+      var typekitOrGoogleFontsUsed = (
+        typeof Typekit !== "undefined" ||
+        [].slice.call(document.head.querySelectorAll("link[rel=stylesheet]")).filter(function(linkElem){
+          return linkElem.href.indexOf("fonts.googleapis.com") !== -1;
+        }).length !== 0
+      );
+
       for (let i = 0; i < mappings.length; i++) {
         var from = mappings[i].from;
         var to = mappings[i].to;
@@ -74,7 +81,7 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
 
           if (
             from.indexOf(fontStack[0]) !== -1 ||
-            from.indexOf(fontStack.map(function(font) {
+            !typekitOrGoogleFontsUsed && from.indexOf(fontStack.map(function(font) {
               var fontNoQuotes = font;
               if (font[0] === "\"" && font[font.length - 1] === "\"" ||
                   font[0] === "'" && font[font.length - 1] === "'"
