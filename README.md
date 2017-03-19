@@ -18,4 +18,5 @@ That's it!
 - [ ] Configuration export and import (should not be necessary thanks to `chrome.storage.sync` but what the heck)
 - [x] Option to exclude elements with specified classes
 - [x] Target elements based on actually rendered font instead of first font in stack
-- [ ] Option to exclude specified sites/domains
+- [x] Option to exclude specified sites/domains
+- [ ] More user-friendly domain exclusion (instead of RegEx)

@@ -45,8 +45,8 @@ function addNewMappingField(from, to) {
 xhr(chrome.runtime.getURL("defaults.json"), function(response) {
   var defaults = JSON.parse(response);
 
-  chrome.storage.sync.get([ "mappings", "filters" ], function(result) {
-    var mappings, filters;
+  chrome.storage.sync.get([ "mappings", "classFilters", "domainFilters" ], function(result) {
+    var mappings, classFilters, domainFilters;
 
     /* replacements */
 
@@ -60,15 +60,25 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
       addNewMappingField(mappings[i].from, mappings[i].to);
     }
 
-    /* filters */
+    /* classFilters */
 
-    if (result.filters) {
-      filters = result.filters;
+    if (result.classFilters) {
+      classFilters = result.classFilters;
     } else {
-      filters = [];
+      classFilters = [];
     }
 
-    document.querySelector(".input-filters").value = filters.join("\n");
+    document.querySelector(".input-class-filters").value = classFilters.join("\n");
+
+    /* domainFilters */
+
+    if (result.domainFilters) {
+      domainFilters = result.domainFilters;
+    } else {
+      domainFilters = [];
+    }
+
+    document.querySelector(".input-domain-filters").value = domainFilters.join("\n");
   });
 });
 
@@ -121,17 +131,31 @@ document.querySelectorAll(".save").forEach(function(saveButton, i) {
       console.log("saved replacements");
     });
 
-    /* filters */
+    /* classFilters */
 
-    var filters = document.querySelector(".input-filters").value.split("\n");
+    var classFilters = document.querySelector(".input-class-filters").value.split("\n");
 
-    if (filters.length > 0 && filters[0].length > 0) {
-      chrome.storage.sync.set({ filters: filters }, function() {
-        console.log("saved filters");
+    if (classFilters.length > 0 && classFilters[0].length > 0) {
+      chrome.storage.sync.set({ classFilters: classFilters }, function() {
+        console.log("saved classFilters");
       });
     } else {
-      chrome.storage.sync.remove("filters", function() {
-        console.log("saved filters");
+      chrome.storage.sync.remove("classFilters", function() {
+        console.log("saved classFilters");
+      });
+    }
+
+    /* domainFilters */
+
+    var domainFilters = document.querySelector(".input-domain-filters").value.split("\n");
+
+    if (domainFilters.length > 0 && domainFilters[0].length > 0) {
+      chrome.storage.sync.set({ domainFilters: domainFilters }, function() {
+        console.log("saved domainFilters");
+      });
+    } else {
+      chrome.storage.sync.remove("domainFilters", function() {
+        console.log("saved domainFilters");
       });
     }
   });

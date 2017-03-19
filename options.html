@@ -55,7 +55,7 @@
         margin-bottom: 1.5em;
       }
 
-      .input-filters {
+      textarea {
         height: 6em;
       }
 
@@ -81,11 +81,16 @@
       </ul>
       <button id="new-mapping-field">+ New mapping</button>
     </section>
+
     <section class="section-filters">
       <h2>Filters</h2>
       <label>
-        <span>Exclude elements that match these selectors (newline-separated):</span>
-        <textarea class="input-filters"></textarea>
+        <span>Exclude elements that match these selectors (one per line):</span>
+        <textarea class="input-class-filters"></textarea>
+      </label>
+      <label>
+        <span>Do not run on domains matching the following RegEx patterns (one per line):</span>
+        <textarea class="input-domain-filters"></textarea>
       </label>
     </section>
 
