@@ -71,3 +71,7 @@ chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
     });
   });
 });
+
+document.querySelector("#options-link").addEventListener("click", function() {
+  chrome.tabs.create({ url: chrome.runtime.getURL("options.html") });
+});

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "fontreplacer",
-  "version": "0.0.9",
+  "version": "0.0.10",
 
   "description": "Replace any font with any font stack. Useful for Arial → Helvetica.",
 
