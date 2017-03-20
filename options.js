@@ -40,14 +40,17 @@ function addNewMappingField(from, to) {
   document.querySelector(".list-mapping-fields").appendChild(div);
 }
 
+/* globals */
+
+var optionsKeys = [ "mappings", "classFilters", "domainFilters", "domainFilterOverrides" ];
+var mappings, classFilters, domainFilters, domainFilterOverrides;
+
 /* get defaults, get user options, display them */
 
 xhr(chrome.runtime.getURL("defaults.json"), function(response) {
   var defaults = JSON.parse(response);
 
   chrome.storage.sync.get([ "mappings", "classFilters", "domainFilters", "domainFilterOverrides" ], function(result) {
-    var mappings, classFilters, domainFilters;
-
     /* replacements */
 
     if (result.mappings && result.mappings[0]) {
@@ -183,4 +186,58 @@ document.querySelectorAll(".save").forEach(function(saveButton, i) {
       });
     }
   });
+});
+
+/* populate export box */
+
+function populateExportBox() {
+  var exportBox = document.querySelector(".input-export");
+
+  var optionsObj = {};
+
+  optionsObj.mappings = mappings;
+  optionsObj.classFilters = classFilters;
+  optionsObj.domainFilters = domainFilters;
+  optionsObj.domainFilterOverrides = domainFilterOverrides;
+
+  exportBox.value = JSON.stringify(optionsObj);
+}
+
+setTimeout(populateExportBox, 500);
+
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+  var keys = Object.keys(changes);
+  for (let i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    if (key === "mappings") mappings = changes[key].newValue;
+    if (key === "classFilters") classFilters = changes[key].newValue;
+    if (key === "domainFilters") domainFilters = changes[key].newValue;
+    if (key === "domainFilterOverrides") domainFilterOverrides = changes[key].newValue;
+  }
+  populateExportBox();
+});
+
+/* handle import clicks */
+
+document.querySelector(".import").addEventListener("click", function(e) {
+  var importData; // from user
+  var newData = {}; // validated
+
+  try {
+    importData = JSON.parse(document.querySelector(".input-import").value);
+    var keys = Object.keys(importData);
+    for (let i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      if (optionsKeys.indexOf(key) !== -1) {
+        newData[key] = importData[key];
+      }
+    }
+
+    chrome.storage.sync.set(newData, function() {
+      alert("Import successful.");
+    });
+  } catch (err) {
+    alert("Invalid import data.");
+    console.log(err);
+  }
 });

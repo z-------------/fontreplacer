@@ -84,10 +84,12 @@
 
     <section class="section-filters">
       <h2>Filters</h2>
+      <h3>Elements</h3>
       <label>
         <span>Exclude elements that match these selectors (one per line):</span>
         <textarea class="input-class-filters"></textarea>
       </label>
+      <h3>Domains</h3>
       <label>
         <span>Do not run on domains matching the following RegEx patterns (one per line):</span>
         <textarea class="input-domain-filters"></textarea>
@@ -96,6 +98,19 @@
         <span>...unless they match one of the following patterns (one per line):</span>
         <textarea class="input-domain-filter-overrides"></textarea>
       </label>
+    </section>
+
+    <section class="section-import-export">
+      <h2>Import/export</h2>
+      <label>
+        <span>Copy this stuff to export:</span>
+        <textarea class="input-export" disabled></textarea>
+      </label>
+      <label>
+        <span>Paste in here to import:</span>
+        <textarea class="input-import"></textarea>
+      </label>
+      <button class="import">Import</button>
     </section>
 
     <button class="save save--big">Save</button>
