@@ -1,9 +1,15 @@
 {
   "manifest_version": 2,
   "name": "fontreplacer",
-  "version": "0.0.11",
+  "version": "0.0.12",
 
   "description": "Replace any font with any font stack. Useful for Arial → Helvetica.",
+
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
 
   "options_page": "options.html",
   "options_ui": {
