@@ -17,7 +17,9 @@ var defaults;
 var mappings;
 var classFilters = [];
 var domainFilters = [];
+var domainFilterOverrides = [];
 var domainIsFiltered = false;
+var domainIsFilterOverridden = false;
 var installedFonts;
 var elements = [];
 var replacedCount = 0;
@@ -29,7 +31,7 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
 
   log("getting user options...");
 
-  chrome.storage.sync.get([ "mappings", "classFilters", "domainFilters" ], function(result) {
+  chrome.storage.sync.get([ "mappings", "classFilters", "domainFilters", "domainFilterOverrides" ], function(result) {
     if (result.mappings && result.mappings[0]) {
       mappings = result.mappings;
     } else {
@@ -44,14 +46,32 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
       domainFilters = result.domainFilters;
     }
 
-    log("parsing domain filters...");
+    if (result.domainFilterOverrides) {
+      domainFilterOverrides = result.domainFilterOverrides;
+    }
 
-    for (let i = 0; i < domainFilters.length; i++) {
-      var regex = new RegExp(domainFilters[i], "gi");
+    log("processing domain filters and filter overrides...");
+
+    for (let j = 0; j < domainFilterOverrides.length; j++) {
+      var regex = new RegExp(domainFilterOverrides[j], "gi");
       if (regex.test(location.hostname) === true) {
-        domainIsFiltered = true;
+        domainIsFilterOverridden = true;
         break;
       }
+    }
+
+    if (domainIsFilterOverridden === false) {
+      log("domain is not filter overridden, processing domain filters.");
+
+      for (let i = 0; i < domainFilters.length; i++) {
+        var regex = new RegExp(domainFilters[i], "gi");
+        if (regex.test(location.hostname) === true) {
+          domainIsFiltered = true;
+          break;
+        }
+      }
+    } else {
+      log("domain is filter overridden, ignoring domain filters.");
     }
 
     if (domainIsFiltered === false) {

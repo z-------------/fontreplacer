@@ -45,7 +45,7 @@ function addNewMappingField(from, to) {
 xhr(chrome.runtime.getURL("defaults.json"), function(response) {
   var defaults = JSON.parse(response);
 
-  chrome.storage.sync.get([ "mappings", "classFilters", "domainFilters" ], function(result) {
+  chrome.storage.sync.get([ "mappings", "classFilters", "domainFilters", "domainFilterOverrides" ], function(result) {
     var mappings, classFilters, domainFilters;
 
     /* replacements */
@@ -79,6 +79,16 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
     }
 
     document.querySelector(".input-domain-filters").value = domainFilters.join("\n");
+
+    /* domainFilterOverrides */
+
+    if (result.domainFilterOverrides) {
+      domainFilterOverrides = result.domainFilterOverrides;
+    } else {
+      domainFilterOverrides = [];
+    }
+
+    document.querySelector(".input-domain-filter-overrides").value = domainFilterOverrides.join("\n");
   });
 });
 
@@ -156,6 +166,20 @@ document.querySelectorAll(".save").forEach(function(saveButton, i) {
     } else {
       chrome.storage.sync.remove("domainFilters", function() {
         console.log("saved domainFilters");
+      });
+    }
+
+    /* domainFilterOverrides */
+
+    var domainFilterOverrides = document.querySelector(".input-domain-filter-overrides").value.split("\n");
+
+    if (domainFilterOverrides.length > 0 && domainFilterOverrides[0].length > 0) {
+      chrome.storage.sync.set({ domainFilterOverrides: domainFilterOverrides }, function() {
+        console.log("saved domainFilterOverrides");
+      });
+    } else {
+      chrome.storage.sync.remove("domainFilterOverrides", function() {
+        console.log("saved domainFilterOverrides");
       });
     }
   });
