@@ -1,7 +1,9 @@
 var hostname;
 var tab;
 var domainFilters = [];
+var domainFilterOverrides = [];
 var domainIsFiltered = false;
+var domainIsFilterOverridden = false;
 
 function reload() {
   chrome.tabs.reload(tab.tabId);
@@ -14,9 +16,21 @@ chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
   aElem.href = tab.url;
   hostname = aElem.hostname;
 
-  chrome.storage.sync.get([ "domainFilters" ], function(result) {
+  chrome.storage.sync.get([ "domainFilterOverrides", "domainFilters" ], function(result) {
     if (result.domainFilters) {
       domainFilters = result.domainFilters;
+    }
+
+    if (result.domainFilterOverrides) {
+      domainFilterOverrides = result.domainFilterOverrides;
+    }
+
+    for (let i = 0; i < domainFilterOverrides.length; i++) {
+      var regex = new RegExp(domainFilterOverrides[i], "gi");
+      if (regex.test(hostname) === true) {
+        domainIsFilterOverridden = true;
+        break;
+      }
     }
 
     for (let i = 0; i < domainFilters.length; i++) {
@@ -28,23 +42,31 @@ chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
     }
 
     var toggleElem = document.querySelector("#domain-filter-toggle");
-    toggleElem.checked = !domainIsFiltered;
+    if (domainIsFilterOverridden === true || domainIsFiltered === false) {
+      toggleElem.checked = true;
+    } else {
+      toggleElem.checked = false;
+    }
 
     toggleElem.addEventListener("change", function(e) {
       var newDomainIsFiltered = !toggleElem.checked;
 
       if (newDomainIsFiltered === true) { // "run on this page" = false
-        chrome.storage.sync.get("domainFilters", function(result) {
-          var domainFilters = result.domainFilters || [];
+        if (domainFilterOverrides.indexOf(hostname) !== -1) { // this domain is in domainFilterOverrides
+          domainFilterOverrides.splice(domainFilterOverrides.indexOf(hostname), 1);
+          chrome.storage.sync.set({ domainFilterOverrides: domainFilterOverrides }, reload);
+        } else {
           domainFilters.push(hostname);
           chrome.storage.sync.set({ domainFilters: domainFilters }, reload);
-        });
+        }
       } else { // "run on this page" = true
-        chrome.storage.sync.get("domainFilterOverrides", function(result) {
-          var domainFilterOverrides = result.domainFilterOverrides || [];
+        if (domainFilters.indexOf(hostname) !== -1) { // this domain is in domainFilters
+          domainFilters.splice(domainFilters.indexOf(hostname), 1);
+          chrome.storage.sync.set({ domainFilters: domainFilters }, reload);
+        } else {
           domainFilterOverrides.push(hostname);
           chrome.storage.sync.set({ domainFilterOverrides: domainFilterOverrides }, reload);
-        });
+        }
       }
     });
   });
