@@ -10,15 +10,13 @@
     </style>
   </head>
   <body>
-    <h1>fontreplacer</h1>
+    <h1 data-msg="name"></h1>
     <label>
       <input type="checkbox" id="domain-filter-toggle" />
-      <span>Run on this site</span>
+      <span data-msg="popup_label_domain_toggle"></span>
     </label>
-    <p class="note">
-      Page will reload on toggle.
-    </p>
-    <a href="#" id="options-link">Open full options</a>
+    <p data-msg="popup_note_will_reload" class="note"></p>
+    <a data-msg="popup_button_options_link" href="#" id="options-link"></a>
 
     <script src="popup.js"></script>
   </body>

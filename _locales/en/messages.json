@@ -56,5 +56,15 @@
   },
   "options_button_save": {
     "message": "Save"
+  },
+
+  "popup_label_domain_toggle": {
+    "message": "Run on this site"
+  },
+  "popup_note_will_reload": {
+    "message": "Page will reload on toggle."
+  },
+  "popup_button_options_link": {
+    "message": "Open full options"
   }
 }

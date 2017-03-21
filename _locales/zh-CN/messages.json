@@ -56,5 +56,15 @@
   },
   "options_button_save": {
     "message": "保存"
+  },
+
+  "popup_label_domain_toggle": {
+    "message": "在此域上运行"
+  },
+  "popup_note_will_reload": {
+    "message": "页面将在切换时重新加载。"
+  },
+  "popup_button_options_link": {
+    "message": "打开完整选项"
   }
 }

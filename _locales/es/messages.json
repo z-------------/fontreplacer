@@ -56,5 +56,15 @@
   },
   "options_button_save": {
     "message": "Guardar"
+  },
+
+  "popup_label_domain_toggle": {
+    "message": "Operar en este dominio"
+  },
+  "popup_note_will_reload": {
+    "message": "La página recargará al cambiar."
+  },
+  "popup_button_options_link": {
+    "message": "Abrir configuración completa"
   }
 }

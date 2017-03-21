@@ -75,3 +75,11 @@ chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
 document.querySelector("#options-link").addEventListener("click", function() {
   chrome.tabs.create({ url: chrome.runtime.getURL("options.html") });
 });
+
+/* i18n */
+
+var i18nElems = document.querySelectorAll("[data-msg]");
+for (let i = 0; i < i18nElems.length; i++) {
+  var elem = i18nElems[i];
+  elem.innerHTML = chrome.i18n.getMessage(elem.dataset.msg);
+}

@@ -56,5 +56,15 @@
   },
   "options_button_save": {
     "message": "Savi"
+  },
+
+  "popup_label_domain_toggle": {
+    "message": "Funkcii sur ĉi tiu domajno"
+  },
+  "popup_note_will_reload": {
+    "message": "Paĝo reŝarĝos kiam ĉi tiu estas ŝanĝita."
+  },
+  "popup_button_options_link": {
+    "message": "Vidi ĉiujn agordojn"
   }
 }
