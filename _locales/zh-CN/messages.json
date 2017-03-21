@@ -37,7 +37,7 @@
     "message": "域名"
   },
   "options_label_exclude_domains": {
-    "message": "不要在符合以下RegEx表达的域上运行（每行一个）："
+    "message": "不要在符合以下RegEx表达的网域上运行（每行一个）："
   },
   "options_label_exclude_domains_override": {
     "message": "...除非它们匹配以下表达之一（每行一个）："
@@ -59,7 +59,7 @@
   },
 
   "popup_label_domain_toggle": {
-    "message": "在此域上运行"
+    "message": "在此网域上运行"
   },
   "popup_note_will_reload": {
     "message": "页面将在切换时重新加载。"
