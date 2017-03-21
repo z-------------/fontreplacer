@@ -1,0 +1,60 @@
+{
+  "name": {
+    "message": "fontreplacer"
+  },
+  "description": {
+    "message": "Anstataŭigas ajnan tiparon kun ajna tipararo. Utila por Arial → Helvetica."
+  },
+
+  "options_header_replacements": {
+    "message": "Anstataŭaĵoj"
+  },
+  "options_label_fonts_from": {
+    "message": "Anstataŭigu ĉi tiujn tiparojn (komo-disigita):"
+  },
+  "options_label_fonts_to": {
+    "message": "kun ĉi tiu tipararo:"
+  },
+  "options_button_new_mapping": {
+    "message": "+ Novan surĵeton"
+  },
+  "options_label_repeat_before": {
+    "message": "Ripetu anstataŭadon ĉiu "
+  },
+  "options_label_repeat_after": {
+    "message": " ms (0 = malŝalti)."
+  },
+  "options_header_filters": {
+    "message": "Filtriloj"
+  },
+  "options_header_elements": {
+    "message": "Elementoj"
+  },
+  "options_label_exclude_elements": {
+    "message": "Ekskludu elementojn kiuj kongruas ĉi tiujn CSS-selektorojn (one per line):"
+  },
+  "options_header_domains": {
+    "message": "Domajnoj"
+  },
+  "options_label_exclude_domains": {
+    "message": "Ne funkciu sur domajnoj kiuj kongruas la jenajn RegEx ŝablonojn (unu por linio):"
+  },
+  "options_label_exclude_domains_override": {
+    "message": "...se ili ne kongruas unu el la jenaj ŝablonoj (unu por linio):"
+  },
+  "options_header_import_export": {
+    "message": "Importi/exporti"
+  },
+  "options_label_export": {
+    "message": "Kopiu ĉi tion por eksporti:"
+  },
+  "options_label_import": {
+    "message": "Algluu ĉi tie por importi:"
+  },
+  "options_button_import": {
+    "message": "Importi"
+  },
+  "options_button_save": {
+    "message": "Savi"
+  }
+}

@@ -17,14 +17,14 @@ function stringReplaceAtIndex(string, index, replacement) {
 
 /* html template for mapping field */
 
-var mappingFieldTemplate = "<label>\
-  <span>Replace these fonts (comma separated):</span>\
-  <textarea class=\"from\"></textarea>\
+var mappingFieldTemplate = `<label>
+  <span>${chrome.i18n.getMessage("options_label_fonts_from")}</span>
+  <textarea class="from"></textarea>
 </label>\
 <label>\
-  <span>With this font stack:</span>\
-  <textarea class=\"to\"></textarea>\
-</label>";
+  <span>${chrome.i18n.getMessage("options_label_fonts_to")}</span>
+  <textarea class="to"></textarea>
+</label>`;
 
 /* function for adding new mapping fields */
 
@@ -265,3 +265,11 @@ document.querySelector(".import").addEventListener("click", function(e) {
     console.log(err);
   }
 });
+
+/* i18n */
+
+var i18nElems = document.querySelectorAll("[data-msg]");
+for (let i = 0; i < i18nElems.length; i++) {
+  var elem = i18nElems[i];
+  elem.innerHTML = chrome.i18n.getMessage(elem.dataset.msg);
+}

@@ -1,0 +1,60 @@
+{
+  "name": {
+    "message": "fontreplacer 字体替代"
+  },
+  "description": {
+    "message": "用任何字体堆替换任何字体。适用于 Arial → Helvetica。"
+  },
+
+  "options_header_replacements": {
+    "message": "替换"
+  },
+  "options_label_fonts_from": {
+    "message": "替换这些字体（逗号分隔）："
+  },
+  "options_label_fonts_to": {
+    "message": "用这个字体堆栈："
+  },
+  "options_button_new_mapping": {
+    "message": "+ 添加新替换"
+  },
+  "options_label_repeat_before": {
+    "message": "每"
+  },
+  "options_label_repeat_after": {
+    "message": "毫秒（ms）重复一次（0 = 不重复）。"
+  },
+  "options_header_filters": {
+    "message": "过滤"
+  },
+  "options_header_elements": {
+    "message": "HTML元素"
+  },
+  "options_label_exclude_elements": {
+    "message": "排除与这些选择器匹配的元素（每行一个）："
+  },
+  "options_header_domains": {
+    "message": "域名"
+  },
+  "options_label_exclude_domains": {
+    "message": "不要在符合以下RegEx表达的域上运行（每行一个）："
+  },
+  "options_label_exclude_domains_override": {
+    "message": "...除非它们匹配以下表达之一（每行一个）："
+  },
+  "options_header_import_export": {
+    "message": "导入/导出"
+  },
+  "options_label_export": {
+    "message": "复制此项以导出："
+  },
+  "options_label_import": {
+    "message": "在这里粘贴以导入"
+  },
+  "options_button_import": {
+    "message": "导入"
+  },
+  "options_button_save": {
+    "message": "保存"
+  }
+}

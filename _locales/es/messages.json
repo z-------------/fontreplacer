@@ -1,0 +1,60 @@
+{
+  "name": {
+    "message": "fontreplacer"
+  },
+  "description": {
+    "message": "Reemplazar cualquier fuente con cualquier pila de fuentes. Útil para Arial → Helvetica."
+  },
+
+  "options_header_replacements": {
+    "message": "Reemplazos"
+  },
+  "options_label_fonts_from": {
+    "message": "Reemplazar estes fuentes (separados por comas):"
+  },
+  "options_label_fonts_to": {
+    "message": "con esta pila de fuentes:"
+  },
+  "options_button_new_mapping": {
+    "message": "+ Nueva asignación"
+  },
+  "options_label_repeat_before": {
+    "message": "Repetir reemplazos cada "
+  },
+  "options_label_repeat_after": {
+    "message": " ms (0 = apagar)."
+  },
+  "options_header_filters": {
+    "message": "Filtros"
+  },
+  "options_header_elements": {
+    "message": "Elementos"
+  },
+  "options_label_exclude_elements": {
+    "message": "Excluir elementos que coincidan con uno de estas selectores (uno por línea):"
+  },
+  "options_header_domains": {
+    "message": "Dominios"
+  },
+  "options_label_exclude_domains": {
+    "message": "No operar en dominios que coincidan con uno de estas patrones RegEx (uno por línea):"
+  },
+  "options_label_exclude_domains_override": {
+    "message": "...a menos que coincidan con uno de los siguientes patrones (uno por línea):"
+  },
+  "options_header_import_export": {
+    "message": "Importar/exportar"
+  },
+  "options_label_export": {
+    "message": "Copiar esto para exportar:"
+  },
+  "options_label_import": {
+    "message": "Pegar aquí para importar:"
+  },
+  "options_button_import": {
+    "message": "Importar"
+  },
+  "options_button_save": {
+    "message": "Guardar"
+  }
+}

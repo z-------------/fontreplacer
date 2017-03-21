@@ -1,0 +1,60 @@
+{
+  "name": {
+    "message": "fontreplacer"
+  },
+  "description": {
+    "message": "Replace any font with any font stack. Useful for Arial → Helvetica."
+  },
+
+  "options_header_replacements": {
+    "message": "Replacements"
+  },
+  "options_label_fonts_from": {
+    "message": "Replace these fonts (comma separated):"
+  },
+  "options_label_fonts_to": {
+    "message": "with this font stack:"
+  },
+  "options_button_new_mapping": {
+    "message": "+ New mapping"
+  },
+  "options_label_repeat_before": {
+    "message": "Repeat replacement every "
+  },
+  "options_label_repeat_after": {
+    "message": " ms (0 = disable)."
+  },
+  "options_header_filters": {
+    "message": "Filters"
+  },
+  "options_header_elements": {
+    "message": "Elements"
+  },
+  "options_label_exclude_elements": {
+    "message": "Exclude elements that match these selectors (one per line):"
+  },
+  "options_header_domains": {
+    "message": "Domains"
+  },
+  "options_label_exclude_domains": {
+    "message": "Do not run on domains matching the following RegEx patterns (one per line):"
+  },
+  "options_label_exclude_domains_override": {
+    "message": "...unless they match one of the following patterns (one per line):"
+  },
+  "options_header_import_export": {
+    "message": "Import/export"
+  },
+  "options_label_export": {
+    "message": "Copy this stuff to export:"
+  },
+  "options_label_import": {
+    "message": "Paste in here to import:"
+  },
+  "options_button_import": {
+    "message": "Import"
+  },
+  "options_button_save": {
+    "message": "Save"
+  }
+}

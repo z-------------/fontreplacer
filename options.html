@@ -83,50 +83,50 @@
   </head>
   <body>
     <section class="section-replacement">
-      <h2>Replacements</h2>
+      <h2 data-msg="options_header_replacements"></h2>
       <ul class="list-mapping-fields">
         <!-- mapping fields will go here -->
       </ul>
-      <button id="new-mapping-field">+ New mapping</button>
+      <button data-msg="options_button_new_mapping" id="new-mapping-field"></button>
       <label>
-        <span>Repeat replacement every </span>
+        <span data-msg="options_label_repeat_before"></span>
         <input class="input-repeat-interval" type="number" min="0" step="1" />
-        <span> ms (0 = disable).</span>
+        <span data-msg="options_label_repeat_after"></span>
       </label>
     </section>
 
     <section class="section-filters">
-      <h2>Filters</h2>
-      <h3>Elements</h3>
+      <h2 data-msg="options_header_filters"></h2>
+      <h3 data-msg="options_header_elements"></h3>
       <label>
-        <span>Exclude elements that match these selectors (one per line):</span>
+        <span data-msg="options_label_exclude_elements"></span>
         <textarea class="input-class-filters"></textarea>
       </label>
-      <h3>Domains</h3>
+      <h3 data-msg="options_header_domains"></h3>
       <label>
-        <span>Do not run on domains matching the following RegEx patterns (one per line):</span>
+        <span data-msg="options_label_exclude_domains"></span>
         <textarea class="input-domain-filters"></textarea>
       </label>
       <label>
-        <span>...unless they match one of the following patterns (one per line):</span>
+        <span data-msg="options_label_exclude_domains_override"></span>
         <textarea class="input-domain-filter-overrides"></textarea>
       </label>
     </section>
 
     <section class="section-import-export">
-      <h2>Import/export</h2>
+      <h2 data-msg="options_header_import_export"></h2>
       <label>
-        <span>Copy this stuff to export:</span>
+        <span data-msg="options_label_export"></span>
         <textarea class="input-export" disabled></textarea>
       </label>
       <label>
-        <span>Paste in here to import:</span>
+        <span data-msg="options_label_import"></span>
         <textarea class="input-import"></textarea>
       </label>
-      <button class="import">Import</button>
+      <button  data-msg="options_button_import" class="import"></button>
     </section>
 
-    <button class="save save--big">Save</button>
+    <button  data-msg="options_button_save" class="save save--big">Save</button>
 
     <script src="options.js"></script>
   </body>
