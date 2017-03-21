@@ -18,7 +18,7 @@
 
       span {
         display: inline-block;
-        vertical-align: top;
+        vertical-align: middle;
       }
 
       section {
@@ -39,6 +39,11 @@
         font-family: "Source Code Pro", "Inconsolata", "Consolas", "Noto Mono", monospace;
 
         resize: vertical;
+      }
+
+      input[type=number] {
+        width: 75px;
+        text-align: right;
       }
 
       .mapping-field {
@@ -83,6 +88,11 @@
         <!-- mapping fields will go here -->
       </ul>
       <button id="new-mapping-field">+ New mapping</button>
+      <label>
+        <span>Repeat replacement every </span>
+        <input class="input-repeat-interval" type="number" min="0" step="1" />
+        <span> ms (0 = disable).</span>
+      </label>
     </section>
 
     <section class="section-filters">

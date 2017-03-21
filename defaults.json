@@ -2,5 +2,6 @@
   "mappings": [{
     "from": ["arial"],
     "to": "FreeSans, 'Noto Sans', sans-serif"
-    }]
+    }],
+  "repeatInterval": 0
 }

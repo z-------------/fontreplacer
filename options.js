@@ -42,15 +42,15 @@ function addNewMappingField(from, to) {
 
 /* globals */
 
-var optionsKeys = [ "mappings", "classFilters", "domainFilters", "domainFilterOverrides" ];
-var mappings, classFilters, domainFilters, domainFilterOverrides;
+var optionsKeys = [ "mappings", "classFilters", "domainFilters", "domainFilterOverrides", "repeatInterval" ];
+var mappings, classFilters, domainFilters, domainFilterOverrides, repeatInterval;
 
 /* get defaults, get user options, display them */
 
 xhr(chrome.runtime.getURL("defaults.json"), function(response) {
   var defaults = JSON.parse(response);
 
-  chrome.storage.sync.get([ "mappings", "classFilters", "domainFilters", "domainFilterOverrides" ], function(result) {
+  chrome.storage.sync.get([ "mappings", "classFilters", "domainFilters", "domainFilterOverrides", "repeatInterval" ], function(result) {
     /* replacements */
 
     if (result.mappings && result.mappings[0]) {
@@ -92,6 +92,16 @@ xhr(chrome.runtime.getURL("defaults.json"), function(response) {
     }
 
     document.querySelector(".input-domain-filter-overrides").value = domainFilterOverrides.join("\n");
+
+    /* repeatInterval */
+
+    if (result.repeatInterval) {
+      repeatInterval = result.repeatInterval;
+    } else {
+      repeatInterval = defaults.repeatInterval;
+    }
+
+    document.querySelector(".input-repeat-interval").value = repeatInterval;
   });
 });
 
@@ -183,6 +193,20 @@ document.querySelectorAll(".save").forEach(function(saveButton, i) {
     } else {
       chrome.storage.sync.remove("domainFilterOverrides", function() {
         console.log("saved domainFilterOverrides");
+      });
+    }
+
+    /* repeatInterval */
+
+    var repeatIntervalRaw = document.querySelector(".input-repeat-interval").value;
+
+    if (Number(repeatIntervalRaw) !== NaN && Number(repeatIntervalRaw) >= 0 && Number(repeatIntervalRaw) % 1 === 0) {
+      chrome.storage.sync.set({ repeatInterval: Number(repeatIntervalRaw) }, function() {
+        console.log("saved repeatInterval");
+      });
+    } else {
+      chrome.storage.sync.remove("repeatInterval", function() {
+        console.log("saved repeatInterval");
       });
     }
   });
