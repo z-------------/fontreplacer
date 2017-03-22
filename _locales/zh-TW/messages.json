@@ -1,70 +1,70 @@
 {
   "name": {
-    "message": "fontreplacer 字体替代"
+    "message": "fontreplacer 字體替代"
   },
   "description": {
-    "message": "用任何字体堆替换任何字体。适用于 Arial → Helvetica。"
+    "message": "用任何字體堆替換任何字體。 適用於 Arial → Helvetica。"
   },
 
   "options_header_replacements": {
-    "message": "替换"
+    "message": "替換"
   },
   "options_label_fonts_from": {
-    "message": "将原有字体（以逗号分隔）："
+    "message": "將原有字體（以逗號分隔）："
   },
   "options_label_fonts_to": {
-    "message": "替换为此字体列表："
+    "message": "替換為此字體列表："
   },
   "options_button_new_mapping": {
-    "message": "+ 添加新替换"
+    "message": "+ 添加新替換"
   },
   "options_label_repeat_before": {
     "message": "每"
   },
   "options_label_repeat_after": {
-    "message": "毫秒（ms）替换一次（0 = 不重复）。"
+    "message": "毫秒（ms）替換一次（0 = 不重複）。"
   },
   "options_header_filters": {
-    "message": "过滤"
+    "message": "過濾"
   },
   "options_header_elements": {
     "message": "HTML元素"
   },
   "options_label_exclude_elements": {
-    "message": "排除与这些选择器匹配的元素（每行一个）："
+    "message": "排除與這些選擇器匹配的元素（每行一個）："
   },
   "options_header_domains": {
     "message": "域名"
   },
   "options_label_exclude_domains": {
-    "message": "若域名符合以下RegEx表达，不要运行（每行一個）："
+    "message": "若域名符合以下RegEx表達，不要運行（每行一個）："
   },
   "options_label_exclude_domains_override": {
-    "message": "...除非它们符合以下表达之一（每行一个）："
+    "message": "...除非它們符合以下表達之一（每行一個）："
   },
   "options_header_import_export": {
-    "message": "导入/导出"
+    "message": "導入/導出"
   },
   "options_label_export": {
-    "message": "复制此项以供导出："
+    "message": "複製此項以供導出："
   },
   "options_label_import": {
-    "message": "粘贴于此以供导入："
+    "message": "粘貼於此以供導入："
   },
   "options_button_import": {
-    "message": "导入"
+    "message": "導入"
   },
   "options_button_save": {
     "message": "保存"
   },
 
   "popup_label_domain_toggle": {
-    "message": "在此网域上运行"
+    "message": "在此網域上運行"
   },
   "popup_note_will_reload": {
-    "message": "页面将在切换时重新加载。"
+    "message": "頁面將在切換時重新加載。"
   },
   "popup_button_options_link": {
-    "message": "完整选项"
+    "message": "完整選項"
   }
 }
